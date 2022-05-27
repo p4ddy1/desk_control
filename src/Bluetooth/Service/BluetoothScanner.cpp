@@ -11,12 +11,11 @@ namespace DeskControl::Bluetooth::Service {
     }
 
     void BluetoothScanner::startScan() {
-        deskList.clear();
-        discoveryAgent->start();
+        discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
     }
 
     void BluetoothScanner::deviceScanFinished() {
-        emit scanFinished(deskList);
+        emit scanFinished();
     }
 
     void BluetoothScanner::deviceFound(const QBluetoothDeviceInfo &info) {
@@ -26,10 +25,14 @@ namespace DeskControl::Bluetooth::Service {
                 info.serviceClasses()
                 );
 
-        deskList.append(desk);
+        emit deskFound(desk);
     }
 
     void BluetoothScanner::deviceErrorOccurred(QBluetoothDeviceDiscoveryAgent::Error error) {
         emit errorOccurred("Some error"); //TODO: Implement this further
+    }
+
+    void BluetoothScanner::stopScan() {
+        discoveryAgent->stop();
     }
 } // Bluetooth

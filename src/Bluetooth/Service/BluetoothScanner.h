@@ -13,9 +13,9 @@ namespace DeskControl::Bluetooth::Service {
             explicit BluetoothScanner(int discoveryTimeout = 20000, QObject* parent = nullptr);
 
             void startScan();
+            void stopScan();
         private:
         QBluetoothDeviceDiscoveryAgent* discoveryAgent;
-        QList<Desk*> deskList;
 
         private slots:
             void deviceScanFinished();
@@ -23,7 +23,8 @@ namespace DeskControl::Bluetooth::Service {
             void deviceErrorOccurred(QBluetoothDeviceDiscoveryAgent::Error error);
 
         signals:
-            void scanFinished(const QList<Desk*> foundDeskList);
+            void scanFinished();
+            void deskFound(Desk* desk);
             void errorOccurred(QString error);
         };
 

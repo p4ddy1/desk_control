@@ -3,11 +3,16 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
+#include "../DeviceScanWindow/DeviceScanWindow.h"
 
 namespace DeskControl::Gui::MainWindow {
+    using DeviceScanWindow::DeviceScanWindow;
+
     MainWindow::MainWindow(QWidget *parent) :
             QWidget(parent), ui(new Ui::MainWindow) {
         ui->setupUi(this);
+
+        deviceConfigStorage = new DeviceConfigStorage();
 
         auto heightMapping = new Bluetooth::Service::HeightMapping{1760, 800};
 
@@ -18,19 +23,13 @@ namespace DeskControl::Gui::MainWindow {
         connect(bluetoothController, &BluetoothController::heightChanged, this, &MainWindow::heightChanged);
 
         deskModel = new DeskModel(this);
-        //This is only temporary until scanning is implemented
-        deskModel->add(new Bluetooth::Model::Desk(
-                QBluetoothUuid("{foo}"),
-                "Desk 8113",
-                0
-                ));
 
         ui->deviceComboBox->setModel(deskModel);
-
 
         connect(ui->connectButton, &QPushButton::clicked, this, &MainWindow::connectButtonClicked);
         connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
         connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
+        connect(ui->scanButton, &QPushButton::clicked, this, &MainWindow::scanButtonClicked);
     }
 
     MainWindow::~MainWindow() {
@@ -79,5 +78,33 @@ namespace DeskControl::Gui::MainWindow {
         int heightInCm = heightInMm / 10;
 
         heightLabel->setText(QString::number(heightInCm) + " cm");
+    }
+
+    void MainWindow::scanButtonClicked() {
+        DeviceScanWindow deviceScanWindow(this);
+
+        connect(&deviceScanWindow, &DeviceScanWindow::deviceConfigChanged, this, &MainWindow::deviceConfigChanged);
+
+        deviceScanWindow.exec();
+    }
+
+    void MainWindow::showEvent(QShowEvent *event) {
+        loadDeviceList();
+    }
+
+    void MainWindow::loadDeviceList() {
+        auto deskList = deviceConfigStorage->load();
+        deskModel->clear();
+        deskModel->add(deskList);
+
+        auto deviceComboBox = findChild<QComboBox*>("deviceComboBox");
+
+        if (!deskList.empty()) {
+            deviceComboBox->setCurrentIndex(0);
+        }
+    }
+
+    void MainWindow::deviceConfigChanged() {
+        loadDeviceList();
     }
 } // DeskControl::Gui::MainWindow

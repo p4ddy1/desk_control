@@ -16,6 +16,7 @@ namespace DeskControl::Gui::Model {
                 QVariant data(const QModelIndex &index, int role) const override;
 
                 void add(Desk* item);
+                void add(QList<Desk*> list);
                 void clear();
                 Desk* get(QModelIndex index) const;
                 Desk* get(int index) const;

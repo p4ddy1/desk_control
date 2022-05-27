@@ -43,4 +43,8 @@ namespace DeskControl::Gui::Model {
     Desk *DeskModel::get(int index) const {
         return deskList.at(index);
     }
+
+    void DeskModel::add(QList<Desk *> list) {
+        deskList.append(list);
+    }
 } // Model
