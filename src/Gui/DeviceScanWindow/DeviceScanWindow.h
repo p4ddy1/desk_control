@@ -5,13 +5,11 @@
 #include "../../Bluetooth/Service/BluetoothScanner.h"
 #include "../../Bluetooth/Model/Desk.h"
 #include "../Model/DeskModel.h"
-#include "../../Config/Devices/DeviceConfigStorage.h"
 
 namespace DeskControl::Gui::DeviceScanWindow {
 
     using Bluetooth::Service::BluetoothScanner;
     using Bluetooth::Model::Desk;
-    using Config::Devices::DeviceConfigStorage;
     using Model::DeskModel;
 
     QT_BEGIN_NAMESPACE
@@ -34,13 +32,12 @@ namespace DeskControl::Gui::DeviceScanWindow {
         void scanFinished();
 
     signals:
-        void deviceConfigChanged();
+        void deviceConfigChanged(Desk* newDesk);
 
     private:
         Ui::DeviceScanWindow *ui;
         BluetoothScanner* bluetoothScanner;
         DeskModel* deskModel;
-        DeviceConfigStorage* configStorage;
 
         void setAddButtonState();
     };

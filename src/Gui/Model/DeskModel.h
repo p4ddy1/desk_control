@@ -20,6 +20,7 @@ namespace DeskControl::Gui::Model {
                 void clear();
                 Desk* get(QModelIndex index) const;
                 Desk* get(int index) const;
+                QList<Desk*> getDeskList() const;
 
             private:
                 QList<Desk*> deskList;

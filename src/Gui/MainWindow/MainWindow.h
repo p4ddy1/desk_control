@@ -3,13 +3,21 @@
 
 #include <QWidget>
 #include "../Model/DeskModel.h"
+#include "../Model/PositionModel.h"
 #include "../../Bluetooth/Service/BluetoothController.h"
-#include "../../Config/Devices/DeviceConfigStorage.h"
+#include "../../Bluetooth/Service/TargetHeightMovementService.h"
+#include "../../Bluetooth/Model/Desk.h"
+#include "../../Config/ConfigStorage.h"
+#include "../../Config/Model/Config.h"
 
 namespace DeskControl::Gui::MainWindow {
     using Model::DeskModel;
+    using Model::PositionModel;
     using Bluetooth::Service::BluetoothController;
-    using Config::Devices::DeviceConfigStorage;
+    using Bluetooth::Service::TargetHeightMovementService;
+    using Bluetooth::Model::Desk;
+    using Config::ConfigStorage;
+    using Config::Model::Config;
 
     QT_BEGIN_NAMESPACE
     namespace Ui { class MainWindow; }
@@ -19,29 +27,46 @@ namespace DeskControl::Gui::MainWindow {
     Q_OBJECT
 
     public:
-        explicit MainWindow(QWidget *parent = nullptr);
+        MainWindow(ConfigStorage* configStorage, Config* config, QWidget *parent = nullptr);
 
         ~MainWindow() override;
 
     private slots:
         void connectButtonClicked();
+        void disconnectButtonClicked();
         void connected();
+        void disconnected();
         void connectionFailed(QString errorMessage);
         void upButtonClicked();
         void downButtonClicked();
         void heightChanged(int heightInMm);
         void scanButtonClicked();
-        void deviceConfigChanged();
+        void deviceConfigChanged(Desk* newDesk);
+        void addCurrentPositionButtonClicked();
+        void deletePositionButtonClicked();
+        void moveToPositionButtonClicked();
+        void addPositionInputButtonClicked();
 
     private:
         Ui::MainWindow *ui;
         DeskModel* deskModel;
+        PositionModel* positionModel;
+
+        ConfigStorage* configStorage;
+        Config* config;
 
         BluetoothController* bluetoothController;
-        DeviceConfigStorage* deviceConfigStorage;
+        TargetHeightMovementService* targetHeightMovementService;
+
+        int currentHeightMm;
 
         void showEvent(QShowEvent *event) override;
         void loadDeviceList();
+        void loadPositionList();
+
+        void savePositionList();
+
+        QString askForPositionName();
     };
 } // DeskControl::Gui::MainWindow
 

@@ -8,8 +8,6 @@ namespace DeskControl::Gui::DeviceScanWindow {
             QDialog(parent), ui(new Ui::DeviceScanWindow) {
         ui->setupUi(this);
 
-        configStorage = new DeviceConfigStorage();
-
         deskModel = new DeskModel(this);
         ui->devicesListView->setModel(deskModel);
 
@@ -58,12 +56,7 @@ namespace DeskControl::Gui::DeviceScanWindow {
 
         auto selectedDesk = deskModel->get(deviceListView->currentIndex());
 
-        auto deskList = configStorage->load();
-        deskList.append(selectedDesk);
-
-        configStorage->save(deskList);
-
-        emit deviceConfigChanged();
+        emit deviceConfigChanged(selectedDesk);
 
         this->close();
     }

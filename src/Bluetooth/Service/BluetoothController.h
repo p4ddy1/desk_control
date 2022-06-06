@@ -23,10 +23,14 @@ namespace DeskControl::Bluetooth::Service {
             explicit BluetoothController(HeightMapping* heightMapping, QObject* parent = nullptr);
 
             void connectToDesk(Desk* deskToConnectTo);
+            void disconnectFromDesk();
             void move(Direction direction);
+            void stop();
+            int getCurrentHeightMm() const;
 
         private slots:
             void connectedToDevice();
+            void disconnectedFromDevice();
             void serviceDiscovered(const QBluetoothUuid &newService);
             void serviceDiscoveryFinished();
             void heightServiceDetailsDiscovered(QLowEnergyService::ServiceState newState);
@@ -36,6 +40,7 @@ namespace DeskControl::Bluetooth::Service {
         signals:
             void connectionFailed(QString errorMessage);
             void connected();
+            void disconnected();
             void heightChanged(int heightInMm);
 
         private:
@@ -44,6 +49,8 @@ namespace DeskControl::Bluetooth::Service {
             QLowEnergyService* heightService;
             QLowEnergyService* movementService;
             HeightMapping* heightMapping;
+            int currentHeightMm;
+
 
             const QBluetoothUuid HEIGHT_SERVICE_UUID = QBluetoothUuid("{99fa0020-338a-1024-8a49-009c0215f78a}");
             const QBluetoothUuid HEIGHT_CHARACTERISTIC_UUID = QBluetoothUuid("{99fa0021-338a-1024-8a49-009c0215f78a}");

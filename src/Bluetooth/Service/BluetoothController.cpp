@@ -18,6 +18,7 @@ namespace DeskControl::Bluetooth::Service {
         controller = QLowEnergyController::createCentral(deviceInfo);
 
         connect(controller, &QLowEnergyController::connected, this, &BluetoothController::connectedToDevice);
+        connect(controller, &QLowEnergyController::disconnected, this, &BluetoothController::disconnectedFromDevice);
         connect(controller, &QLowEnergyController::serviceDiscovered, this, &BluetoothController::serviceDiscovered);
         connect(controller, &QLowEnergyController::discoveryFinished, this, &BluetoothController::serviceDiscoveryFinished);
 
@@ -46,7 +47,7 @@ namespace DeskControl::Bluetooth::Service {
 
     void BluetoothController::serviceDiscoveryFinished() {
         if (heightService == nullptr) {
-            emit connectionFailed("Missing Height Service");
+            emit connectionFailed("Missing Position Service");
             return;
         }
 
@@ -101,10 +102,8 @@ namespace DeskControl::Bluetooth::Service {
             value = QByteArray::fromHex("4600");
         }
 
-        auto characteristic = movementService->characteristic(MOVEMENT_CHARACTERISTIC_UUID);
-
         movementService->writeCharacteristic(
-                characteristic,
+                movementService->characteristic(MOVEMENT_CHARACTERISTIC_UUID),
                 value
         );
     }
@@ -120,9 +119,33 @@ namespace DeskControl::Bluetooth::Service {
     }
 
     int BluetoothController::calculateHeightInMm(const QByteArray &value) {
-        auto rawData = *(reinterpret_cast<const quint16 *>(value.constData()));
+        auto rawHeight = *(reinterpret_cast<const quint16_le*>(value.constData()));
 
-        int heightMm = ((rawData - heightMapping->heightRaw) / 10) + heightMapping->heightMm;
+        int heightMm = ((rawHeight - heightMapping->heightRaw) / 10) + heightMapping->heightMm;
+
+        currentHeightMm = heightMm;
+
         return heightMm;
+    }
+
+    int BluetoothController::getCurrentHeightMm() const {
+        return currentHeightMm;
+    }
+
+    void BluetoothController::stop() {
+        movementService->writeCharacteristic(
+                movementService->characteristic(MOVEMENT_CHARACTERISTIC_UUID),
+                QByteArray::fromHex("FF")
+        );
+    }
+
+    void BluetoothController::disconnectFromDesk() {
+        controller->disconnectFromDevice();
+    }
+
+    void BluetoothController::disconnectedFromDevice() {
+        delete heightService;
+        delete movementService;
+        emit disconnected();
     }
 } // Bluetooth

@@ -13,7 +13,7 @@ namespace DeskControl::Gui::Model {
             return {};
         }
 
-        if (index.row() >= deskList.size() || index.row() < 0) {
+        if (index.row() >= deskList.count() || index.row() < 0) {
             return {};
         }
 
@@ -45,6 +45,12 @@ namespace DeskControl::Gui::Model {
     }
 
     void DeskModel::add(QList<Desk *> list) {
+        beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
         deskList.append(list);
+        endInsertRows();
+    }
+
+    QList<Desk *> DeskModel::getDeskList() const {
+        return deskList;
     }
 } // Model
