@@ -4,15 +4,14 @@ namespace DeskControl::Bluetooth::Service {
     TargetHeightMovementService::TargetHeightMovementService(
             BluetoothController *bluetoothController,
             QObject *parent
-            ): bluetoothController(bluetoothController), QObject(parent)
-
-    {
+    ) : bluetoothController(bluetoothController), QObject(parent) {
         movementTimer = new QTimer(this);
 
         connect(movementTimer, &QTimer::timeout, this, &TargetHeightMovementService::movementTimerTimeout);
 
         lastMoveCommandSent = QTime::currentTime();
-        connect(bluetoothController, &BluetoothController::heightChanged, this, &TargetHeightMovementService::heightChanged);
+        connect(bluetoothController, &BluetoothController::heightChanged, this,
+                &TargetHeightMovementService::heightChanged);
     }
 
     void TargetHeightMovementService::moveToHeight(int heightMm) {

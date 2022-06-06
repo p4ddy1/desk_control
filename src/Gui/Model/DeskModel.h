@@ -7,25 +7,31 @@
 namespace DeskControl::Gui::Model {
     using Bluetooth::Model::Desk;
 
-            class DeskModel : public QAbstractListModel {
-                Q_OBJECT
-            public:
-                explicit DeskModel(QObject* parent = nullptr);
+    class DeskModel : public QAbstractListModel {
+    Q_OBJECT
+    public:
+        explicit DeskModel(QObject *parent = nullptr);
 
-                int rowCount(const QModelIndex &parent) const override;
-                QVariant data(const QModelIndex &index, int role) const override;
+        int rowCount(const QModelIndex &parent) const override;
 
-                void add(Desk* item);
-                void add(QList<Desk*> list);
-                void clear();
-                Desk* get(QModelIndex index) const;
-                Desk* get(int index) const;
-                QList<Desk*> getDeskList() const;
+        QVariant data(const QModelIndex &index, int role) const override;
 
-            private:
-                QList<Desk*> deskList;
-            };
+        void add(Desk *item);
 
-        } // Model
+        void add(QList<Desk *> list);
+
+        void clear();
+
+        Desk *get(QModelIndex index) const;
+
+        Desk *get(int index) const;
+
+        QList<Desk *> getDeskList() const;
+
+    private:
+        QList<Desk *> deskList;
+    };
+
+} // Model
 
 #endif //DESK_CONTROL_DESKMODEL_H

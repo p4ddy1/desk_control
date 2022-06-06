@@ -9,7 +9,7 @@
 namespace DeskControl::Gui::MainWindow {
     using DeviceScanWindow::DeviceScanWindow;
 
-    MainWindow::MainWindow(ConfigStorage* configStorage, Config* config, QWidget *parent) :
+    MainWindow::MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent) :
             config(config), configStorage(configStorage),
             QWidget(parent), ui(new Ui::MainWindow) {
         ui->setupUi(this);
@@ -38,7 +38,8 @@ namespace DeskControl::Gui::MainWindow {
         connect(ui->upButton, &QPushButton::clicked, this, &MainWindow::upButtonClicked);
         connect(ui->downButton, &QPushButton::clicked, this, &MainWindow::downButtonClicked);
         connect(ui->scanButton, &QPushButton::clicked, this, &MainWindow::scanButtonClicked);
-        connect(ui->addCurrentPositionButton, &QPushButton::clicked, this, &MainWindow::addCurrentPositionButtonClicked);
+        connect(ui->addCurrentPositionButton, &QPushButton::clicked, this,
+                &MainWindow::addCurrentPositionButtonClicked);
         connect(ui->deletePositionButton, &QPushButton::clicked, this, &MainWindow::deletePositionButtonClicked);
         connect(ui->moveToPositionButton, &QPushButton::clicked, this, &MainWindow::moveToPositionButtonClicked);
         connect(ui->addPositionInputButton, &QPushButton::clicked, this, &MainWindow::addPositionInputButtonClicked);
@@ -49,7 +50,7 @@ namespace DeskControl::Gui::MainWindow {
     }
 
     void MainWindow::connectButtonClicked() {
-        auto deviceComboBox = findChild<QComboBox*>("deviceComboBox");
+        auto deviceComboBox = findChild<QComboBox *>("deviceComboBox");
 
         auto selectedDesk = deskModel->get(deviceComboBox->currentIndex());
 
@@ -69,11 +70,11 @@ namespace DeskControl::Gui::MainWindow {
     }
 
     void MainWindow::connected() {
-        auto disconnectButton = findChild<QPushButton*>("disconnectButton");
-        auto connectButton = findChild<QPushButton*>("connectButton");
-        auto scanButton = findChild<QPushButton*>("scanButton");
-        auto controlGroupBox = findChild<QGroupBox*>("controlGroupBox");
-        auto storedPositionsGroupBox = findChild<QGroupBox*>("storedPositionsGroupBox");
+        auto disconnectButton = findChild<QPushButton *>("disconnectButton");
+        auto connectButton = findChild<QPushButton *>("connectButton");
+        auto scanButton = findChild<QPushButton *>("scanButton");
+        auto controlGroupBox = findChild<QGroupBox *>("controlGroupBox");
+        auto storedPositionsGroupBox = findChild<QGroupBox *>("storedPositionsGroupBox");
 
         controlGroupBox->setEnabled(true);
         storedPositionsGroupBox->setEnabled(true);
@@ -83,11 +84,11 @@ namespace DeskControl::Gui::MainWindow {
     }
 
     void MainWindow::disconnected() {
-        auto disconnectButton = findChild<QPushButton*>("disconnectButton");
-        auto connectButton = findChild<QPushButton*>("connectButton");
-        auto scanButton = findChild<QPushButton*>("scanButton");
-        auto controlGroupBox = findChild<QGroupBox*>("controlGroupBox");
-        auto storedPositionsGroupBox = findChild<QGroupBox*>("storedPositionsGroupBox");
+        auto disconnectButton = findChild<QPushButton *>("disconnectButton");
+        auto connectButton = findChild<QPushButton *>("connectButton");
+        auto scanButton = findChild<QPushButton *>("scanButton");
+        auto controlGroupBox = findChild<QGroupBox *>("controlGroupBox");
+        auto storedPositionsGroupBox = findChild<QGroupBox *>("storedPositionsGroupBox");
 
         controlGroupBox->setEnabled(false);
         storedPositionsGroupBox->setEnabled(false);
@@ -105,7 +106,7 @@ namespace DeskControl::Gui::MainWindow {
     void MainWindow::heightChanged(int heightInMm) {
         currentHeightMm = heightInMm;
 
-        auto heightLabel = findChild<QLabel*>("heightLabel");
+        auto heightLabel = findChild<QLabel *>("heightLabel");
 
         int heightInCm = heightInMm / 10;
 
@@ -131,7 +132,7 @@ namespace DeskControl::Gui::MainWindow {
         deskModel->clear();
         deskModel->add(deskList);
 
-        auto deviceComboBox = findChild<QComboBox*>("deviceComboBox");
+        auto deviceComboBox = findChild<QComboBox *>("deviceComboBox");
 
         if (!deskList.empty()) {
             deviceComboBox->setCurrentIndex(0);
@@ -145,7 +146,7 @@ namespace DeskControl::Gui::MainWindow {
         positionModel->add(positionList);
     }
 
-    void MainWindow::deviceConfigChanged(Desk* newDesk) {
+    void MainWindow::deviceConfigChanged(Desk *newDesk) {
         deskModel->add(newDesk);
 
         config->setDeskList(deskModel->getDeskList());
@@ -173,7 +174,7 @@ namespace DeskControl::Gui::MainWindow {
                 "Please insert a name for the position",
                 QLineEdit::Normal,
                 ""
-                );
+        );
 
         return text;
     }
@@ -184,14 +185,14 @@ namespace DeskControl::Gui::MainWindow {
     }
 
     void MainWindow::deletePositionButtonClicked() {
-        auto storedPositionTable = findChild<QTableView*>("storedPositionTable");
+        auto storedPositionTable = findChild<QTableView *>("storedPositionTable");
 
         positionModel->remove(storedPositionTable->currentIndex());
         savePositionList();
     }
 
     void MainWindow::moveToPositionButtonClicked() {
-        auto storedPositionTable = findChild<QTableView*>("storedPositionTable");
+        auto storedPositionTable = findChild<QTableView *>("storedPositionTable");
 
         auto index = storedPositionTable->currentIndex();
 
@@ -204,7 +205,7 @@ namespace DeskControl::Gui::MainWindow {
     }
 
     void MainWindow::addPositionInputButtonClicked() {
-        auto positionInput = findChild<QLineEdit*>("positionInput");
+        auto positionInput = findChild<QLineEdit *>("positionInput");
 
         auto position = positionInput->text().replace(" cm", "").toInt() * 10;
 

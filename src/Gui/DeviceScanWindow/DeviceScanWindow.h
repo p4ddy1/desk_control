@@ -25,19 +25,25 @@ namespace DeskControl::Gui::DeviceScanWindow {
         ~DeviceScanWindow() override;
 
     private slots:
-        void deskFound(Desk* desk);
+
+        void deskFound(Desk *desk);
+
         void startButtonClicked();
+
         void stopButtonClicked();
+
         void addButtonClicked();
+
         void scanFinished();
 
     signals:
-        void deviceConfigChanged(Desk* newDesk);
+
+        void deviceConfigChanged(Desk *newDesk);
 
     private:
         Ui::DeviceScanWindow *ui;
-        BluetoothScanner* bluetoothScanner;
-        DeskModel* deskModel;
+        BluetoothScanner *bluetoothScanner;
+        DeskModel *deskModel;
 
         void setAddButtonState();
     };

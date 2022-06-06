@@ -65,7 +65,7 @@ namespace DeskControl::Gui::Model {
         endInsertRows();
     }
 
-    void PositionModel::add(QList<Position*> list) {
+    void PositionModel::add(QList<Position *> list) {
         beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()) + list.size());
         positionList.append(list);
         endInsertRows();
@@ -86,7 +86,7 @@ namespace DeskControl::Gui::Model {
     }
 
     void PositionModel::remove(QModelIndex index) {
-        if(!index.isValid()) {
+        if (!index.isValid()) {
             return;
         }
 

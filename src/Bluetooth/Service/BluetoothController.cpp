@@ -1,8 +1,8 @@
 #include "BluetoothController.h"
 
 namespace DeskControl::Bluetooth::Service {
-    BluetoothController::BluetoothController(HeightMapping* heightMapping, QObject *parent) :
-    heightMapping(heightMapping), QObject(parent) {
+    BluetoothController::BluetoothController(HeightMapping *heightMapping, QObject *parent) :
+            heightMapping(heightMapping), QObject(parent) {
 
     }
 
@@ -13,14 +13,15 @@ namespace DeskControl::Bluetooth::Service {
                 desk->getUuid(),
                 desk->getName(),
                 desk->getServiceClasses()
-                );
+        );
 
         controller = QLowEnergyController::createCentral(deviceInfo);
 
         connect(controller, &QLowEnergyController::connected, this, &BluetoothController::connectedToDevice);
         connect(controller, &QLowEnergyController::disconnected, this, &BluetoothController::disconnectedFromDevice);
         connect(controller, &QLowEnergyController::serviceDiscovered, this, &BluetoothController::serviceDiscovered);
-        connect(controller, &QLowEnergyController::discoveryFinished, this, &BluetoothController::serviceDiscoveryFinished);
+        connect(controller, &QLowEnergyController::discoveryFinished, this,
+                &BluetoothController::serviceDiscoveryFinished);
 
         controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
         controller->connectToDevice();
@@ -34,8 +35,10 @@ namespace DeskControl::Bluetooth::Service {
         if (newService == HEIGHT_SERVICE_UUID) {
             heightService = controller->createServiceObject(newService);
 
-            connect(heightService, &QLowEnergyService::stateChanged, this, &BluetoothController::heightServiceDetailsDiscovered);
-            connect(heightService, &QLowEnergyService::characteristicChanged, this, &BluetoothController::heightCharacteristicChanged);
+            connect(heightService, &QLowEnergyService::stateChanged, this,
+                    &BluetoothController::heightServiceDetailsDiscovered);
+            connect(heightService, &QLowEnergyService::characteristicChanged, this,
+                    &BluetoothController::heightCharacteristicChanged);
             heightService->discoverDetails();
         }
 
@@ -70,7 +73,7 @@ namespace DeskControl::Bluetooth::Service {
             auto uuid = characteristic.uuid();
 
             if (uuid == HEIGHT_CHARACTERISTIC_UUID) {
-                for (const auto &descriptor : characteristic.descriptors()) {
+                for (const auto &descriptor: characteristic.descriptors()) {
                     if (descriptor.name() == "Client Characteristic Configuration") {
                         heightService->writeDescriptor(descriptor, QByteArray::fromHex("0100")); //Enable Updates
                         updatesEnabled = true;
@@ -108,7 +111,8 @@ namespace DeskControl::Bluetooth::Service {
         );
     }
 
-    void BluetoothController::heightCharacteristicChanged(const QLowEnergyCharacteristic &info, const QByteArray &value) {
+    void
+    BluetoothController::heightCharacteristicChanged(const QLowEnergyCharacteristic &info, const QByteArray &value) {
         if (info.uuid() != HEIGHT_CHARACTERISTIC_UUID) {
             return;
         }
@@ -119,7 +123,7 @@ namespace DeskControl::Bluetooth::Service {
     }
 
     int BluetoothController::calculateHeightInMm(const QByteArray &value) {
-        auto rawHeight = *(reinterpret_cast<const quint16_le*>(value.constData()));
+        auto rawHeight = *(reinterpret_cast<const quint16_le *>(value.constData()));
 
         int heightMm = ((rawHeight - heightMapping->heightRaw) / 10) + heightMapping->heightMm;
 

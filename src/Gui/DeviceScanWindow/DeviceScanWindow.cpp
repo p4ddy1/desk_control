@@ -25,13 +25,13 @@ namespace DeskControl::Gui::DeviceScanWindow {
         delete ui;
     }
 
-    void DeviceScanWindow::deskFound(Desk* desk) {
+    void DeviceScanWindow::deskFound(Desk *desk) {
         deskModel->add(desk);
     }
 
     void DeviceScanWindow::startButtonClicked() {
-        auto startButton = findChild<QPushButton*>("startButton");
-        auto stopButton = findChild<QPushButton*>("stopButton");
+        auto startButton = findChild<QPushButton *>("startButton");
+        auto stopButton = findChild<QPushButton *>("stopButton");
 
         bluetoothScanner->startScan();
 
@@ -40,8 +40,8 @@ namespace DeskControl::Gui::DeviceScanWindow {
     }
 
     void DeviceScanWindow::stopButtonClicked() {
-        auto startButton = findChild<QPushButton*>("startButton");
-        auto stopButton = findChild<QPushButton*>("stopButton");
+        auto startButton = findChild<QPushButton *>("startButton");
+        auto stopButton = findChild<QPushButton *>("stopButton");
 
         bluetoothScanner->stopScan();
 
@@ -52,7 +52,7 @@ namespace DeskControl::Gui::DeviceScanWindow {
     }
 
     void DeviceScanWindow::addButtonClicked() {
-        auto deviceListView = findChild<QListView*>("devicesListView");
+        auto deviceListView = findChild<QListView *>("devicesListView");
 
         auto selectedDesk = deskModel->get(deviceListView->currentIndex());
 
@@ -62,7 +62,7 @@ namespace DeskControl::Gui::DeviceScanWindow {
     }
 
     void DeviceScanWindow::setAddButtonState() {
-        auto addButton = findChild<QPushButton*>("addButton");
+        auto addButton = findChild<QPushButton *>("addButton");
 
         if (deskModel->rowCount(QModelIndex()) <= 0) {
             addButton->setEnabled(false);

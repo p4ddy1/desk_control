@@ -13,27 +13,30 @@
 
 
 namespace DeskControl::Config {
-        using Bluetooth::Model::Desk;
-        using Gui::Model::Position;
-        using Model::Config;
+    using Bluetooth::Model::Desk;
+    using Gui::Model::Position;
+    using Model::Config;
 
-        class ConfigStorage {
-        public:
-            explicit ConfigStorage(QString path);
+    class ConfigStorage {
+    public:
+        explicit ConfigStorage(QString path);
 
-            bool save(Config* config);
-            Config* load();
+        bool save(Config *config);
 
-        private:
-            void convertDeskListToJson(QList<Desk*> list, QJsonObject& json);
-            void convertPositionListToJson(QList<Position *> list, QJsonObject& json);
+        Config *load();
 
-            QList<Desk *> convertJsonToDeskList(QJsonObject json);
-            QList<Position *> convertJsonToPositionList(QJsonObject json);
+    private:
+        void convertDeskListToJson(QList<Desk *> list, QJsonObject &json);
 
-            QString path;
-        };
+        void convertPositionListToJson(QList<Position *> list, QJsonObject &json);
 
-    } // Config
+        QList<Desk *> convertJsonToDeskList(QJsonObject json);
+
+        QList<Position *> convertJsonToPositionList(QJsonObject json);
+
+        QString path;
+    };
+
+} // Config
 
 #endif //DESK_CONTROL_CONFIGSTORAGE_H

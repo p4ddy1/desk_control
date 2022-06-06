@@ -27,41 +27,57 @@ namespace DeskControl::Gui::MainWindow {
     Q_OBJECT
 
     public:
-        MainWindow(ConfigStorage* configStorage, Config* config, QWidget *parent = nullptr);
+        MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent = nullptr);
 
         ~MainWindow() override;
 
     private slots:
+
         void connectButtonClicked();
+
         void disconnectButtonClicked();
+
         void connected();
+
         void disconnected();
+
         void connectionFailed(QString errorMessage);
+
         void upButtonClicked();
+
         void downButtonClicked();
+
         void heightChanged(int heightInMm);
+
         void scanButtonClicked();
-        void deviceConfigChanged(Desk* newDesk);
+
+        void deviceConfigChanged(Desk *newDesk);
+
         void addCurrentPositionButtonClicked();
+
         void deletePositionButtonClicked();
+
         void moveToPositionButtonClicked();
+
         void addPositionInputButtonClicked();
 
     private:
         Ui::MainWindow *ui;
-        DeskModel* deskModel;
-        PositionModel* positionModel;
+        DeskModel *deskModel;
+        PositionModel *positionModel;
 
-        ConfigStorage* configStorage;
-        Config* config;
+        ConfigStorage *configStorage;
+        Config *config;
 
-        BluetoothController* bluetoothController;
-        TargetHeightMovementService* targetHeightMovementService;
+        BluetoothController *bluetoothController;
+        TargetHeightMovementService *targetHeightMovementService;
 
         int currentHeightMm;
 
         void showEvent(QShowEvent *event) override;
+
         void loadDeviceList();
+
         void loadPositionList();
 
         void savePositionList();

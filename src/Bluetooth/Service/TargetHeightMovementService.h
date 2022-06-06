@@ -4,31 +4,36 @@
 #include "BluetoothController.h"
 
 namespace DeskControl::Bluetooth::Service {
-            class TargetHeightMovementService : public QObject {
-            Q_OBJECT
+    class TargetHeightMovementService : public QObject {
+    Q_OBJECT
 
-            public:
-                TargetHeightMovementService(BluetoothController* bluetoothController, QObject* parent = nullptr);
-                void moveToHeight(int heightMm);
+    public:
+        TargetHeightMovementService(BluetoothController *bluetoothController, QObject *parent = nullptr);
 
-            private slots:
-                void heightChanged(int heightInMm);
-                void movementTimerTimeout();
+        void moveToHeight(int heightMm);
 
-            private:
-                BluetoothController* bluetoothController;
-                Direction movementDirection;
-                bool requestedMovement;
-                int targetHeight;
-                QTime lastMoveCommandSent;
+    private slots:
 
-                QTimer* movementTimer;
+        void heightChanged(int heightInMm);
 
-                void sendMovementCommand();
-                void stopMovement();
-                bool shouldMoveFurther();
-            };
+        void movementTimerTimeout();
 
-        } // Service
+    private:
+        BluetoothController *bluetoothController;
+        Direction movementDirection;
+        bool requestedMovement;
+        int targetHeight;
+        QTime lastMoveCommandSent;
+
+        QTimer *movementTimer;
+
+        void sendMovementCommand();
+
+        void stopMovement();
+
+        bool shouldMoveFurther();
+    };
+
+} // Service
 
 #endif //DESK_CONTROL_TARGETHEIGHTMOVEMENTSERVICE_H

@@ -5,18 +5,19 @@
 
 namespace DeskControl::Gui::Model {
 
-            class Position {
-            public:
-                Position(QString name, int heightMm);
+    class Position {
+    public:
+        Position(QString name, int heightMm);
 
-                QString getName() const;
-                int getHeightMm() const;
+        QString getName() const;
 
-            private:
-                QString name;
-                int heightMm;
-            };
+        int getHeightMm() const;
 
-        } // Model
+    private:
+        QString name;
+        int heightMm;
+    };
+
+} // Model
 
 #endif //DESK_CONTROL_POSITION_H

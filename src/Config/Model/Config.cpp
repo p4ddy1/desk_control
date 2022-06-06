@@ -1,8 +1,8 @@
 #include "Config.h"
 
 namespace DeskControl::Config::Model {
-    Config::Config(QList<Desk *> deskList, QList<Position *> positionList):
-        deskList(std::move(deskList)), positionList(std::move(positionList)) {
+    Config::Config(QList<Desk *> deskList, QList<Position *> positionList) :
+            deskList(std::move(deskList)), positionList(std::move(positionList)) {
 
     }
 

@@ -2,11 +2,12 @@
 
 namespace DeskControl::Bluetooth::Service {
 
-    BluetoothScanner::BluetoothScanner(int discoveryTimeout, QObject* parent) : QObject(parent) {
+    BluetoothScanner::BluetoothScanner(int discoveryTimeout, QObject *parent) : QObject(parent) {
         discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
         discoveryAgent->setLowEnergyDiscoveryTimeout(discoveryTimeout);
 
-        connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, &BluetoothScanner::deviceFound);
+        connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this,
+                &BluetoothScanner::deviceFound);
         connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished, this, &BluetoothScanner::deviceScanFinished);
     }
 
@@ -23,7 +24,7 @@ namespace DeskControl::Bluetooth::Service {
                 info.deviceUuid(),
                 info.name(),
                 info.serviceClasses()
-                );
+        );
 
         emit deskFound(desk);
     }

@@ -1,7 +1,7 @@
 #include "ConfigStorage.h"
 
 namespace DeskControl::Config {
-    ConfigStorage::ConfigStorage(QString path): path(std::move(path)) {
+    ConfigStorage::ConfigStorage(QString path) : path(std::move(path)) {
     }
 
     bool ConfigStorage::save(Config *config) {
@@ -22,7 +22,7 @@ namespace DeskControl::Config {
         return true;
     }
 
-    Config* ConfigStorage::load() {
+    Config *ConfigStorage::load() {
         QFile loadFile(path);
 
         if (!loadFile.open(QIODevice::ReadOnly)) {
@@ -39,14 +39,14 @@ namespace DeskControl::Config {
         return new Config(deskList, positionList);
     }
 
-    void ConfigStorage::convertDeskListToJson(QList<Desk*> list, QJsonObject& json) {
+    void ConfigStorage::convertDeskListToJson(QList<Desk *> list, QJsonObject &json) {
         QJsonArray deskArray;
 
-        for (auto desk : list) {
+        for (auto desk: list) {
             QJsonObject jsonDesk;
             jsonDesk["uuid"] = desk->getUuid().toString();
             jsonDesk["name"] = desk->getName();
-            jsonDesk["serviceClasses"] = (int)desk->getServiceClasses();
+            jsonDesk["serviceClasses"] = (int) desk->getServiceClasses();
 
             deskArray.append(jsonDesk);
         }
@@ -54,10 +54,10 @@ namespace DeskControl::Config {
         json["deskList"] = deskArray;
     }
 
-    void ConfigStorage::convertPositionListToJson(QList<Position *> list, QJsonObject& json) {
+    void ConfigStorage::convertPositionListToJson(QList<Position *> list, QJsonObject &json) {
         QJsonArray positionArray;
 
-        for (auto position : list) {
+        for (auto position: list) {
             QJsonObject jsonPosition;
             jsonPosition["name"] = position->getName();
             jsonPosition["heightMm"] = position->getHeightMm();
@@ -69,17 +69,17 @@ namespace DeskControl::Config {
     }
 
     QList<Desk *> ConfigStorage::convertJsonToDeskList(QJsonObject json) {
-        QList<Desk*> deskList;
+        QList<Desk *> deskList;
 
         auto deskArray = json["deskList"].toArray();
 
-        for(auto deskEntry : deskArray) {
+        for (auto deskEntry: deskArray) {
             auto deskObject = deskEntry.toObject();
 
             deskList.append(new Desk(
                     QBluetoothUuid(deskObject["uuid"].toString()),
                     deskObject["name"].toString(),
-                    (quint32)deskObject["serviceClasses"].toInteger()
+                    (quint32) deskObject["serviceClasses"].toInteger()
             ));
         }
 
@@ -87,17 +87,17 @@ namespace DeskControl::Config {
     }
 
     QList<Position *> ConfigStorage::convertJsonToPositionList(QJsonObject json) {
-        QList<Position*> positionList;
+        QList<Position *> positionList;
 
         auto positionArray = json["positionList"].toArray();
 
-        for (auto positionEntry : positionArray) {
+        for (auto positionEntry: positionArray) {
             auto positionObject = positionEntry.toObject();
 
             positionList.append(new Position(
                     positionObject["name"].toString(),
                     positionObject["heightMm"].toInt()
-                    ));
+            ));
         }
 
         return positionList;

@@ -1,402 +1,402 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DeskControl::Gui::MainWindow::MainWindow</class>
- <widget class="QWidget" name="DeskControl::Gui::MainWindow::MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>402</width>
-    <height>467</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="windowTitle">
-   <string>Desk Control</string>
-  </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>5</number>
-   </property>
-   <property name="topMargin">
-    <number>5</number>
-   </property>
-   <property name="rightMargin">
-    <number>5</number>
-   </property>
-   <property name="bottomMargin">
-    <number>5</number>
-   </property>
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="spacing">
-      <number>20</number>
-     </property>
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <item>
-      <widget class="QGroupBox" name="connectionGroupBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>1</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>110</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Connection</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>2</number>
+    <class>DeskControl::Gui::MainWindow::MainWindow</class>
+    <widget class="QWidget" name="DeskControl::Gui::MainWindow::MainWindow">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>402</width>
+                <height>467</height>
+            </rect>
         </property>
-        <property name="topMargin">
-         <number>2</number>
-        </property>
-        <property name="rightMargin">
-         <number>2</number>
-        </property>
-        <property name="bottomMargin">
-         <number>2</number>
-        </property>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QPushButton" name="connectButton">
-            <property name="text">
-             <string>Connect</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="disconnectButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Disconnect</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="deviceLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Device</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="deviceComboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="scanButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Scan</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="controlGroupBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>2</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Control</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <property name="spacing">
-             <number>-1</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="upButton">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Up</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="downButton">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="text">
-               <string>Down</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="heightLabel">
-            <property name="font">
-             <font>
-              <pointsize>30</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>0 cm</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="storedPositionsGroupBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Stored Positions</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <property name="leftMargin">
-         <number>0</number>
+            </sizepolicy>
         </property>
-        <property name="topMargin">
-         <number>0</number>
+        <property name="windowTitle">
+            <string>Desk Control</string>
         </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="1" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QLineEdit" name="positionInput">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
+        <layout class="QGridLayout" name="gridLayout">
+            <property name="leftMargin">
+                <number>5</number>
             </property>
-            <property name="inputMask">
-             <string>999 cm</string>
+            <property name="topMargin">
+                <number>5</number>
             </property>
-            <property name="text">
-             <string>0 cm</string>
+            <property name="rightMargin">
+                <number>5</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="addPositionInputButton">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
+            <property name="bottomMargin">
+                <number>5</number>
             </property>
-            <property name="text">
-             <string>Add Position</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QTableView" name="storedPositionTable">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::SingleSelection</enum>
-            </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectRows</enum>
-            </property>
-            <property name="showGrid">
-             <bool>true</bool>
-            </property>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QPushButton" name="moveToPositionButton">
-              <property name="text">
-               <string>Move to Position</string>
-              </property>
-             </widget>
+            <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout">
+                    <property name="spacing">
+                        <number>20</number>
+                    </property>
+                    <property name="sizeConstraint">
+                        <enum>QLayout::SetDefaultConstraint</enum>
+                    </property>
+                    <item>
+                        <widget class="QGroupBox" name="connectionGroupBox">
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>1</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>0</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>16777215</width>
+                                    <height>110</height>
+                                </size>
+                            </property>
+                            <property name="title">
+                                <string>Connection</string>
+                            </property>
+                            <layout class="QGridLayout" name="gridLayout_2">
+                                <property name="leftMargin">
+                                    <number>2</number>
+                                </property>
+                                <property name="topMargin">
+                                    <number>2</number>
+                                </property>
+                                <property name="rightMargin">
+                                    <number>2</number>
+                                </property>
+                                <property name="bottomMargin">
+                                    <number>2</number>
+                                </property>
+                                <item row="2" column="0">
+                                    <layout class="QHBoxLayout" name="horizontalLayout">
+                                        <item>
+                                            <widget class="QPushButton" name="connectButton">
+                                                <property name="text">
+                                                    <string>Connect</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <widget class="QPushButton" name="disconnectButton">
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Disconnect</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                    </layout>
+                                </item>
+                                <item row="0" column="0">
+                                    <layout class="QHBoxLayout" name="horizontalLayout_2">
+                                        <item>
+                                            <widget class="QLabel" name="deviceLabel">
+                                                <property name="sizePolicy">
+                                                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                                                        <horstretch>0</horstretch>
+                                                        <verstretch>0</verstretch>
+                                                    </sizepolicy>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Device</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <widget class="QComboBox" name="deviceComboBox">
+                                                <property name="sizePolicy">
+                                                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                                        <horstretch>0</horstretch>
+                                                        <verstretch>0</verstretch>
+                                                    </sizepolicy>
+                                                </property>
+                                                <property name="minimumSize">
+                                                    <size>
+                                                        <width>50</width>
+                                                        <height>0</height>
+                                                    </size>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <widget class="QPushButton" name="scanButton">
+                                                <property name="sizePolicy">
+                                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                        <horstretch>0</horstretch>
+                                                        <verstretch>0</verstretch>
+                                                    </sizepolicy>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Scan</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                    </layout>
+                                </item>
+                            </layout>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QGroupBox" name="controlGroupBox">
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>2</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>0</width>
+                                    <height>100</height>
+                                </size>
+                            </property>
+                            <property name="title">
+                                <string>Control</string>
+                            </property>
+                            <layout class="QGridLayout" name="gridLayout_3">
+                                <property name="leftMargin">
+                                    <number>0</number>
+                                </property>
+                                <property name="topMargin">
+                                    <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                    <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                    <number>0</number>
+                                </property>
+                                <item row="0" column="0">
+                                    <layout class="QHBoxLayout" name="horizontalLayout_3">
+                                        <item>
+                                            <layout class="QVBoxLayout" name="verticalLayout_2">
+                                                <property name="spacing">
+                                                    <number>-1</number>
+                                                </property>
+                                                <item>
+                                                    <widget class="QPushButton" name="upButton">
+                                                        <property name="enabled">
+                                                            <bool>true</bool>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>100</width>
+                                                                <height>0</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="maximumSize">
+                                                            <size>
+                                                                <width>50</width>
+                                                                <height>16777215</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Up</string>
+                                                        </property>
+                                                    </widget>
+                                                </item>
+                                                <item>
+                                                    <widget class="QPushButton" name="downButton">
+                                                        <property name="enabled">
+                                                            <bool>true</bool>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>100</width>
+                                                                <height>0</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="maximumSize">
+                                                            <size>
+                                                                <width>50</width>
+                                                                <height>16777215</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="layoutDirection">
+                                                            <enum>Qt::LeftToRight</enum>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Down</string>
+                                                        </property>
+                                                    </widget>
+                                                </item>
+                                            </layout>
+                                        </item>
+                                        <item>
+                                            <widget class="QLabel" name="heightLabel">
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>30</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>0 cm</string>
+                                                </property>
+                                                <property name="alignment">
+                                                    <set>Qt::AlignCenter</set>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                    </layout>
+                                </item>
+                            </layout>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QGroupBox" name="storedPositionsGroupBox">
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>0</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="title">
+                                <string>Stored Positions</string>
+                            </property>
+                            <layout class="QGridLayout" name="gridLayout_4">
+                                <property name="leftMargin">
+                                    <number>0</number>
+                                </property>
+                                <property name="topMargin">
+                                    <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                    <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                    <number>0</number>
+                                </property>
+                                <item row="1" column="0">
+                                    <layout class="QHBoxLayout" name="horizontalLayout_5">
+                                        <item>
+                                            <widget class="QLineEdit" name="positionInput">
+                                                <property name="maximumSize">
+                                                    <size>
+                                                        <width>100</width>
+                                                        <height>16777215</height>
+                                                    </size>
+                                                </property>
+                                                <property name="inputMask">
+                                                    <string>999 cm</string>
+                                                </property>
+                                                <property name="text">
+                                                    <string>0 cm</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <widget class="QPushButton" name="addPositionInputButton">
+                                                <property name="maximumSize">
+                                                    <size>
+                                                        <width>16777215</width>
+                                                        <height>16777215</height>
+                                                    </size>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Add Position</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                    </layout>
+                                </item>
+                                <item row="0" column="0">
+                                    <layout class="QVBoxLayout" name="verticalLayout_3">
+                                        <item>
+                                            <widget class="QTableView" name="storedPositionTable">
+                                                <property name="sizePolicy">
+                                                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                                        <horstretch>0</horstretch>
+                                                        <verstretch>0</verstretch>
+                                                    </sizepolicy>
+                                                </property>
+                                                <property name="minimumSize">
+                                                    <size>
+                                                        <width>0</width>
+                                                        <height>0</height>
+                                                    </size>
+                                                </property>
+                                                <property name="selectionMode">
+                                                    <enum>QAbstractItemView::SingleSelection</enum>
+                                                </property>
+                                                <property name="selectionBehavior">
+                                                    <enum>QAbstractItemView::SelectRows</enum>
+                                                </property>
+                                                <property name="showGrid">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <attribute name="verticalHeaderVisible">
+                                                    <bool>false</bool>
+                                                </attribute>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <layout class="QHBoxLayout" name="horizontalLayout_4">
+                                                <item>
+                                                    <widget class="QPushButton" name="moveToPositionButton">
+                                                        <property name="text">
+                                                            <string>Move to Position</string>
+                                                        </property>
+                                                    </widget>
+                                                </item>
+                                                <item>
+                                                    <widget class="QPushButton" name="addCurrentPositionButton">
+                                                        <property name="text">
+                                                            <string>Add Current Position</string>
+                                                        </property>
+                                                    </widget>
+                                                </item>
+                                                <item>
+                                                    <widget class="QPushButton" name="deletePositionButton">
+                                                        <property name="text">
+                                                            <string>Delete</string>
+                                                        </property>
+                                                    </widget>
+                                                </item>
+                                            </layout>
+                                        </item>
+                                    </layout>
+                                </item>
+                            </layout>
+                        </widget>
+                    </item>
+                </layout>
             </item>
-            <item>
-             <widget class="QPushButton" name="addCurrentPositionButton">
-              <property name="text">
-               <string>Add Current Position</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="deletePositionButton">
-              <property name="text">
-               <string>Delete</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections/>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
 </ui>
