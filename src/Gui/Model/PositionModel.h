@@ -4,37 +4,39 @@
 #include <QAbstractTableModel>
 #include "Position.h"
 
-namespace DeskControl::Gui::Model {
+namespace DeskControl::Gui::Model
+{
 
-    class PositionModel : public QAbstractTableModel {
-    Q_OBJECT
+class PositionModel: public QAbstractTableModel
+{
+Q_OBJECT
 
-    public:
-        explicit PositionModel(QObject *parent = nullptr);
+public:
+    explicit PositionModel(QObject *parent = nullptr);
 
-        int rowCount(const QModelIndex &parent) const override;
+    int rowCount(const QModelIndex &parent) const override;
 
-        int columnCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
 
-        QVariant data(const QModelIndex &index, int role) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
 
-        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
-        void add(Position *item);
+    void add(Position *item);
 
-        void add(QList<Position *> list);
+    void add(QList<Position *> list);
 
-        void clear();
+    void clear();
 
-        Position *get(QModelIndex index);
+    Position *get(QModelIndex index);
 
-        void remove(QModelIndex index);
+    void remove(QModelIndex index);
 
-        QList<Position *> getPositionList() const;
+    QList<Position *> getPositionList() const;
 
-    private:
-        QList<Position *> positionList;
-    };
+private:
+    QList<Position *> positionList;
+};
 
 } // Model
 

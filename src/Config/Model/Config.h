@@ -5,26 +5,28 @@
 #include "../../Bluetooth/Model/Desk.h"
 #include "../../Gui/Model/Position.h"
 
-namespace DeskControl::Config::Model {
-    using Bluetooth::Model::Desk;
-    using Gui::Model::Position;
+namespace DeskControl::Config::Model
+{
+using Bluetooth::Model::Desk;
+using Gui::Model::Position;
 
-    class Config {
-    public:
-        explicit Config(QList<Desk *> deskList = QList<Desk *>(), QList<Position *> positionList = QList<Position *>());
+class Config
+{
+public:
+    explicit Config(QList<Desk *> deskList = QList<Desk *>(), QList<Position *> positionList = QList<Position *>());
 
-        QList<Desk *> getDeskList() const;
+    QList<Desk *> getDeskList() const;
 
-        void setDeskList(QList<Desk *> list);
+    void setDeskList(QList<Desk *> list);
 
-        QList<Position *> getPositionList() const;
+    QList<Position *> getPositionList() const;
 
-        void setPositionList(QList<Position *> list);
+    void setPositionList(QList<Position *> list);
 
-    private:
-        QList<Desk *> deskList;
-        QList<Position *> positionList;
-    };
+private:
+    QList<Desk *> deskList;
+    QList<Position *> positionList;
+};
 
 } // Model
 

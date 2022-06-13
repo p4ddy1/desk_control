@@ -4,7 +4,8 @@
 #include "Gui/MainWindow/MainWindow.h"
 #include "Config/ConfigStorage.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QApplication a(argc, argv);
 
     auto configStorage = new DeskControl::Config::ConfigStorage("config.json");

@@ -6,47 +6,52 @@
 #include "../../Bluetooth/Model/Desk.h"
 #include "../Model/DeskModel.h"
 
-namespace DeskControl::Gui::DeviceScanWindow {
+namespace DeskControl::Gui::DeviceScanWindow
+{
 
-    using Bluetooth::Service::BluetoothScanner;
-    using Bluetooth::Model::Desk;
-    using Model::DeskModel;
+using Bluetooth::Service::BluetoothScanner;
+using Bluetooth::Model::Desk;
+using Model::DeskModel;
 
-    QT_BEGIN_NAMESPACE
-    namespace Ui { class DeviceScanWindow; }
-    QT_END_NAMESPACE
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class DeviceScanWindow;
+}
+QT_END_NAMESPACE
 
-    class DeviceScanWindow : public QDialog {
-    Q_OBJECT
+class DeviceScanWindow: public QDialog
+{
+Q_OBJECT
 
-    public:
-        explicit DeviceScanWindow(QWidget *parent = nullptr);
+public:
+    explicit DeviceScanWindow(QWidget *parent = nullptr);
 
-        ~DeviceScanWindow() override;
+    ~DeviceScanWindow() override;
 
-    private slots:
+private slots:
 
-        void deskFound(Desk *desk);
+    void deskFound(Desk *desk);
 
-        void startButtonClicked();
+    void startButtonClicked();
 
-        void stopButtonClicked();
+    void stopButtonClicked();
 
-        void addButtonClicked();
+    void addButtonClicked();
 
-        void scanFinished();
+    void scanFinished();
 
-    signals:
+signals:
 
-        void deviceConfigChanged(Desk *newDesk);
+    void deviceConfigChanged(Desk *newDesk);
 
-    private:
-        Ui::DeviceScanWindow *ui;
-        BluetoothScanner *bluetoothScanner;
-        DeskModel *deskModel;
+private:
+    Ui::DeviceScanWindow *ui;
+    BluetoothScanner *bluetoothScanner;
+    DeskModel *deskModel;
 
-        void setAddButtonState();
-    };
+    void setAddButtonState();
+};
 } // DeskControl::Gui::DeviceScanWindow
 
 #endif //DESK_CONTROL_DEVICESCANWINDOW_H

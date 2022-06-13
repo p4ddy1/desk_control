@@ -3,20 +3,22 @@
 
 #include <QString>
 
-namespace DeskControl::Gui::Model {
+namespace DeskControl::Gui::Model
+{
 
-    class Position {
-    public:
-        Position(QString name, int heightMm);
+class Position
+{
+public:
+    Position(QString name, int heightMm);
 
-        QString getName() const;
+    QString getName() const;
 
-        int getHeightMm() const;
+    int getHeightMm() const;
 
-    private:
-        QString name;
-        int heightMm;
-    };
+private:
+    QString name;
+    int heightMm;
+};
 
 } // Model
 

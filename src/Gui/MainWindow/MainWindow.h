@@ -10,80 +10,85 @@
 #include "../../Config/ConfigStorage.h"
 #include "../../Config/Model/Config.h"
 
-namespace DeskControl::Gui::MainWindow {
-    using Model::DeskModel;
-    using Model::PositionModel;
-    using Bluetooth::Service::BluetoothController;
-    using Bluetooth::Service::TargetHeightMovementService;
-    using Bluetooth::Model::Desk;
-    using Config::ConfigStorage;
-    using Config::Model::Config;
+namespace DeskControl::Gui::MainWindow
+{
+using Model::DeskModel;
+using Model::PositionModel;
+using Bluetooth::Service::BluetoothController;
+using Bluetooth::Service::TargetHeightMovementService;
+using Bluetooth::Model::Desk;
+using Config::ConfigStorage;
+using Config::Model::Config;
 
-    QT_BEGIN_NAMESPACE
-    namespace Ui { class MainWindow; }
-    QT_END_NAMESPACE
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class MainWindow;
+}
+QT_END_NAMESPACE
 
-    class MainWindow : public QWidget {
-    Q_OBJECT
+class MainWindow: public QWidget
+{
+Q_OBJECT
 
-    public:
-        MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent = nullptr);
+public:
+    MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent = nullptr);
 
-        ~MainWindow() override;
+    ~MainWindow() override;
 
-    private slots:
+private slots:
 
-        void connectButtonClicked();
+    void connectButtonClicked();
 
-        void disconnectButtonClicked();
+    void disconnectButtonClicked();
 
-        void connected();
+    void connected();
 
-        void disconnected();
+    void disconnected();
 
-        void connectionFailed(QString errorMessage);
+    void connectionFailed(QString errorMessage);
 
-        void upButtonClicked();
+    void upButtonClicked();
 
-        void downButtonClicked();
+    void downButtonClicked();
 
-        void heightChanged(int heightInMm);
+    void heightChanged(int heightInMm);
 
-        void scanButtonClicked();
+    void scanButtonClicked();
 
-        void deviceConfigChanged(Desk *newDesk);
+    void deviceConfigChanged(Desk *newDesk);
 
-        void addCurrentPositionButtonClicked();
+    void addCurrentPositionButtonClicked();
 
-        void deletePositionButtonClicked();
+    void deletePositionButtonClicked();
 
-        void moveToPositionButtonClicked();
+    void moveToPositionButtonClicked();
 
-        void addPositionInputButtonClicked();
+    void addPositionInputButtonClicked();
 
-    private:
-        Ui::MainWindow *ui;
-        DeskModel *deskModel;
-        PositionModel *positionModel;
+private:
+    Ui::MainWindow *ui;
+    DeskModel *deskModel;
+    PositionModel *positionModel;
 
-        ConfigStorage *configStorage;
-        Config *config;
+    ConfigStorage *configStorage;
+    Config *config;
 
-        BluetoothController *bluetoothController;
-        TargetHeightMovementService *targetHeightMovementService;
+    BluetoothController *bluetoothController;
+    TargetHeightMovementService *targetHeightMovementService;
 
-        int currentHeightMm;
+    int currentHeightMm;
 
-        void showEvent(QShowEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
-        void loadDeviceList();
+    void loadDeviceList();
 
-        void loadPositionList();
+    void loadPositionList();
 
-        void savePositionList();
+    void savePositionList();
 
-        QString askForPositionName();
-    };
+    QString askForPositionName();
+};
 } // DeskControl::Gui::MainWindow
 
 #endif //DESK_CONTROL_MAINWINDOW_H

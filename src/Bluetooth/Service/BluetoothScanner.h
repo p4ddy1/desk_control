@@ -4,37 +4,39 @@
 #include <QtBluetooth>
 #include "../Model/Desk.h"
 
-namespace DeskControl::Bluetooth::Service {
-    using Model::Desk;
+namespace DeskControl::Bluetooth::Service
+{
+using Model::Desk;
 
-    class BluetoothScanner : public QObject {
-    Q_OBJECT
-    public:
-        explicit BluetoothScanner(int discoveryTimeout = 20000, QObject *parent = nullptr);
+class BluetoothScanner: public QObject
+{
+Q_OBJECT
+public:
+    explicit BluetoothScanner(int discoveryTimeout = 20000, QObject *parent = nullptr);
 
-        void startScan();
+    void startScan();
 
-        void stopScan();
+    void stopScan();
 
-    private:
-        QBluetoothDeviceDiscoveryAgent *discoveryAgent;
+private:
+    QBluetoothDeviceDiscoveryAgent *discoveryAgent;
 
-    private slots:
+private slots:
 
-        void deviceScanFinished();
+    void deviceScanFinished();
 
-        void deviceFound(const QBluetoothDeviceInfo &info);
+    void deviceFound(const QBluetoothDeviceInfo &info);
 
-        void deviceErrorOccurred(QBluetoothDeviceDiscoveryAgent::Error error);
+    void deviceErrorOccurred(QBluetoothDeviceDiscoveryAgent::Error error);
 
-    signals:
+signals:
 
-        void scanFinished();
+    void scanFinished();
 
-        void deskFound(Desk *desk);
+    void deskFound(Desk *desk);
 
-        void errorOccurred(QString error);
-    };
+    void errorOccurred(QString error);
+};
 
 } // Bluetooth
 

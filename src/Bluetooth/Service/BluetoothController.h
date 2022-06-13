@@ -4,75 +4,78 @@
 #include <QtBluetooth>
 #include "../Model/Desk.h"
 
-namespace DeskControl::Bluetooth::Service {
-    using Model::Desk;
+namespace DeskControl::Bluetooth::Service
+{
+using Model::Desk;
 
-    struct HeightMapping {
-        int heightRaw;
-        int heightMm;
-    };
+struct HeightMapping
+{
+    int heightRaw;
+    int heightMm;
+};
 
-    enum Direction {
-        Up,
-        Down
-    };
+enum Direction
+{
+    Up,
+    Down
+};
 
-    class BluetoothController : public QObject {
-    Q_OBJECT
-    public:
-        explicit BluetoothController(HeightMapping *heightMapping, QObject *parent = nullptr);
+class BluetoothController: public QObject
+{
+Q_OBJECT
+public:
+    explicit BluetoothController(HeightMapping *heightMapping, QObject *parent = nullptr);
 
-        void connectToDesk(Desk *deskToConnectTo);
+    void connectToDesk(Desk *deskToConnectTo);
 
-        void disconnectFromDesk();
+    void disconnectFromDesk();
 
-        void move(Direction direction);
+    void move(Direction direction);
 
-        void stop();
+    void stop();
 
-        int getCurrentHeightMm() const;
+    int getCurrentHeightMm() const;
 
-    private slots:
+private slots:
 
-        void connectedToDevice();
+    void connectedToDevice();
 
-        void disconnectedFromDevice();
+    void disconnectedFromDevice();
 
-        void serviceDiscovered(const QBluetoothUuid &newService);
+    void serviceDiscovered(const QBluetoothUuid &newService);
 
-        void serviceDiscoveryFinished();
+    void serviceDiscoveryFinished();
 
-        void heightServiceDetailsDiscovered(QLowEnergyService::ServiceState newState);
+    void heightServiceDetailsDiscovered(QLowEnergyService::ServiceState newState);
 
-        void heightCharacteristicChanged(const QLowEnergyCharacteristic &info,
-                                         const QByteArray &value);
+    void heightCharacteristicChanged(const QLowEnergyCharacteristic &info,
+                                     const QByteArray &value);
 
-    signals:
+signals:
 
-        void connectionFailed(QString errorMessage);
+    void connectionFailed(QString errorMessage);
 
-        void connected();
+    void connected();
 
-        void disconnected();
+    void disconnected();
 
-        void heightChanged(int heightInMm);
+    void heightChanged(int heightInMm);
 
-    private:
-        Desk *desk;
-        QLowEnergyController *controller;
-        QLowEnergyService *heightService;
-        QLowEnergyService *movementService;
-        HeightMapping *heightMapping;
-        int currentHeightMm;
+private:
+    Desk *desk;
+    QLowEnergyController *controller;
+    QLowEnergyService *heightService;
+    QLowEnergyService *movementService;
+    HeightMapping *heightMapping;
+    int currentHeightMm;
 
+    const QBluetoothUuid HEIGHT_SERVICE_UUID = QBluetoothUuid("{99fa0020-338a-1024-8a49-009c0215f78a}");
+    const QBluetoothUuid HEIGHT_CHARACTERISTIC_UUID = QBluetoothUuid("{99fa0021-338a-1024-8a49-009c0215f78a}");
+    const QBluetoothUuid MOVEMENT_SERVICE_UUID = QBluetoothUuid("{99fa0001-338a-1024-8a49-009c0215f78a}");
+    const QBluetoothUuid MOVEMENT_CHARACTERISTIC_UUID = QBluetoothUuid("{99fa0002-338a-1024-8a49-009c0215f78a}");
 
-        const QBluetoothUuid HEIGHT_SERVICE_UUID = QBluetoothUuid("{99fa0020-338a-1024-8a49-009c0215f78a}");
-        const QBluetoothUuid HEIGHT_CHARACTERISTIC_UUID = QBluetoothUuid("{99fa0021-338a-1024-8a49-009c0215f78a}");
-        const QBluetoothUuid MOVEMENT_SERVICE_UUID = QBluetoothUuid("{99fa0001-338a-1024-8a49-009c0215f78a}");
-        const QBluetoothUuid MOVEMENT_CHARACTERISTIC_UUID = QBluetoothUuid("{99fa0002-338a-1024-8a49-009c0215f78a}");
-
-        int calculateHeightInMm(const QByteArray &value);
-    };
+    int calculateHeightInMm(const QByteArray &value);
+};
 
 } // Bluetooth
 
