@@ -2,6 +2,11 @@
 #define DESK_CONTROL_MAINWINDOW_H
 
 #include <QWidget>
+#include <QSystemTrayIcon>
+#include <QAction>
+#include <QMenu>
+#include <QWidgetAction>
+#include <QListView>
 #include "../Model/DeskModel.h"
 #include "../Model/PositionModel.h"
 #include "../../Bluetooth/Service/BluetoothController.h"
@@ -66,6 +71,8 @@ private slots:
 
     void addPositionInputButtonClicked();
 
+    void moveToPositionTrayClicked();
+
 private:
     Ui::MainWindow *ui;
     DeskModel *deskModel;
@@ -77,6 +84,16 @@ private:
     BluetoothController *bluetoothController;
     TargetHeightMovementService *targetHeightMovementService;
 
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
+    QAction *hideAction;
+    QAction *showAction;
+    QAction *upAction;
+    QAction *downAction;
+    QWidgetAction *positionAction;
+    QListView *trayPositionListView;
+    QAction *quitAction;
+
     int currentHeightMm;
 
     void showEvent(QShowEvent *event) override;
@@ -86,6 +103,8 @@ private:
     void loadPositionList();
 
     void savePositionList();
+
+    void createTrayIcon();
 
     QString askForPositionName();
 };

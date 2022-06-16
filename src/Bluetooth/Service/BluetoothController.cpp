@@ -77,11 +77,11 @@ void BluetoothController::heightServiceDetailsDiscovered(QLowEnergyService::Serv
 
     bool updatesEnabled = false;
 
-    for (const auto &characteristic: heightService->characteristics()) {
+    for (const auto &characteristic : heightService->characteristics()) {
         auto uuid = characteristic.uuid();
 
         if (uuid == HEIGHT_CHARACTERISTIC_UUID) {
-            for (const auto &descriptor: characteristic.descriptors()) {
+            for (const auto &descriptor : characteristic.descriptors()) {
                 if (descriptor.name() == "Client Characteristic Configuration") {
                     heightService->writeDescriptor(descriptor, QByteArray::fromHex("0100")); //Enable Updates
                     updatesEnabled = true;

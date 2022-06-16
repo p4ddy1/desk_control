@@ -48,7 +48,7 @@ void ConfigStorage::convertDeskListToJson(QList<Desk *> list, QJsonObject &json)
 {
     QJsonArray deskArray;
 
-    for (auto desk: list) {
+    for (auto desk : list) {
         QJsonObject jsonDesk;
         jsonDesk["uuid"] = desk->getUuid().toString();
         jsonDesk["name"] = desk->getName();
@@ -64,7 +64,7 @@ void ConfigStorage::convertPositionListToJson(QList<Position *> list, QJsonObjec
 {
     QJsonArray positionArray;
 
-    for (auto position: list) {
+    for (auto position : list) {
         QJsonObject jsonPosition;
         jsonPosition["name"] = position->getName();
         jsonPosition["heightMm"] = position->getHeightMm();
@@ -77,11 +77,11 @@ void ConfigStorage::convertPositionListToJson(QList<Position *> list, QJsonObjec
 
 QList<Desk *> ConfigStorage::convertJsonToDeskList(QJsonObject json)
 {
-    QList < Desk * > deskList;
+    QList<Desk *> deskList;
 
     auto deskArray = json["deskList"].toArray();
 
-    for (auto deskEntry: deskArray) {
+    for (auto deskEntry : deskArray) {
         auto deskObject = deskEntry.toObject();
 
         deskList.append(new Desk(
@@ -96,11 +96,11 @@ QList<Desk *> ConfigStorage::convertJsonToDeskList(QJsonObject json)
 
 QList<Position *> ConfigStorage::convertJsonToPositionList(QJsonObject json)
 {
-    QList < Position * > positionList;
+    QList<Position *> positionList;
 
     auto positionArray = json["positionList"].toArray();
 
-    for (auto positionEntry: positionArray) {
+    for (auto positionEntry : positionArray) {
         auto positionObject = positionEntry.toObject();
 
         positionList.append(new Position(
