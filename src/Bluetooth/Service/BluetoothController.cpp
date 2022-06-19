@@ -13,16 +13,27 @@ void BluetoothController::connectToDesk(Desk *deskToConnectTo)
 {
     desk = deskToConnectTo;
 
+    QBluetoothDeviceInfo deviceInfo;
 
-    QBluetoothDeviceInfo deviceInfo(
-        desk->getAddress(),
-        desk->getName(),
-        desk->getServiceClasses()
-    );
+    if (!desk->getAddress().isNull()) {
+        deviceInfo = QBluetoothDeviceInfo(
+            desk->getAddress(),
+            desk->getName(),
+            desk->getServiceClasses()
+        );
+    }
+    else {
+        deviceInfo = QBluetoothDeviceInfo(
+            desk->getUuid(),
+            desk->getName(),
+            desk->getServiceClasses()
+        );
+    }
 
     controller = QLowEnergyController::createCentral(deviceInfo);
 
     connect(controller, &QLowEnergyController::connected, this, &BluetoothController::connectedToDevice);
+    connect(controller, &QLowEnergyController::errorOccurred, this, &BluetoothController::errorOccurred);
     connect(controller, &QLowEnergyController::disconnected, this, &BluetoothController::disconnectedFromDevice);
     connect(controller, &QLowEnergyController::serviceDiscovered, this, &BluetoothController::serviceDiscovered);
     connect(controller, &QLowEnergyController::discoveryFinished, this,
@@ -166,5 +177,10 @@ void BluetoothController::disconnectedFromDevice()
     delete heightService;
     delete movementService;
     emit disconnected();
+}
+
+void BluetoothController::errorOccurred(QLowEnergyController::Error newError)
+{
+    emit connectionFailed("Error while establishing connection");
 }
 } // Bluetooth

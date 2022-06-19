@@ -51,6 +51,8 @@ private slots:
     void heightCharacteristicChanged(const QLowEnergyCharacteristic &info,
                                      const QByteArray &value);
 
+    void errorOccurred(QLowEnergyController::Error newError);
+
 signals:
 
     void connectionFailed(QString errorMessage);

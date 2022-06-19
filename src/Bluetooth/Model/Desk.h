@@ -13,7 +13,11 @@ class Desk: public QObject
 {
 Q_OBJECT
 public:
-    Desk(const QBluetoothUuid &uuid, const QBluetoothAddress &address, QString name, quint32 serviceClasses, QObject *parent = nullptr);
+    Desk(const QBluetoothUuid &uuid,
+         const QBluetoothAddress &address,
+         QString name,
+         quint32 serviceClasses,
+         QObject *parent = nullptr);
 
     QBluetoothUuid getUuid() const;
 

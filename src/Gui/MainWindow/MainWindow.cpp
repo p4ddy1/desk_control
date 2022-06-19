@@ -57,6 +57,10 @@ void MainWindow::connectButtonClicked()
 {
     auto deviceComboBox = findChild<QComboBox *>("deviceComboBox");
 
+    if (deskModel->rowCount(QModelIndex()) <= 0) {
+        return;
+    }
+
     auto selectedDesk = deskModel->get(deviceComboBox->currentIndex());
 
     bluetoothController->connectToDesk(selectedDesk);
