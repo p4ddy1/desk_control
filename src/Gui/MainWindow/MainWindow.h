@@ -6,7 +6,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QWidgetAction>
-#include <QListView>
+#include <QCloseEvent>
 #include "../Model/DeskModel.h"
 #include "../Model/PositionModel.h"
 #include "../../Bluetooth/Service/BluetoothController.h"
@@ -14,6 +14,7 @@
 #include "../../Bluetooth/Model/Desk.h"
 #include "../../Config/ConfigStorage.h"
 #include "../../Config/Model/Config.h"
+#include "TrayPositionListView.h"
 
 namespace DeskControl::Gui::MainWindow
 {
@@ -91,7 +92,7 @@ private:
     QAction *upAction;
     QAction *downAction;
     QWidgetAction *positionAction;
-    QListView *trayPositionListView;
+    TrayPositionListView *trayPositionListView;
     QAction *quitAction;
 
     int currentHeightMm;
@@ -107,6 +108,9 @@ private:
     void createTrayIcon();
 
     QString askForPositionName();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 };
 } // DeskControl::Gui::MainWindow
 
