@@ -27,4 +27,3 @@ target_link_libraries(desk_control
         Qt::Widgets
         Qt::Bluetooth
         )
-

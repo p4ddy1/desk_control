@@ -28,6 +28,7 @@ void BluetoothScanner::deviceFound(const QBluetoothDeviceInfo &info)
 {
     auto desk = new Desk(
         info.deviceUuid(),
+        info.address(),
         info.name(),
         info.serviceClasses()
     );

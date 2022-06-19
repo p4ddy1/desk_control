@@ -13,8 +13,9 @@ void BluetoothController::connectToDesk(Desk *deskToConnectTo)
 {
     desk = deskToConnectTo;
 
+
     QBluetoothDeviceInfo deviceInfo(
-        desk->getUuid(),
+        desk->getAddress(),
         desk->getName(),
         desk->getServiceClasses()
     );

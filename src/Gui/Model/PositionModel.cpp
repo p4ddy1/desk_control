@@ -82,15 +82,9 @@ void PositionModel::add(QList<Position *> list)
 
 void PositionModel::clear()
 {
-    auto count = rowCount(QModelIndex());
-
-    if (count <= 0) {
-        return;
-    }
-
-    beginRemoveRows(QModelIndex(), 0, count);
+    beginResetModel();
     positionList.clear();
-    endRemoveRows();
+    endResetModel();
 }
 
 QList<Position *> PositionModel::getPositionList() const

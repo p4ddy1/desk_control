@@ -51,6 +51,7 @@ void ConfigStorage::convertDeskListToJson(QList<Desk *> list, QJsonObject &json)
     for (auto desk : list) {
         QJsonObject jsonDesk;
         jsonDesk["uuid"] = desk->getUuid().toString();
+        jsonDesk["address"] = desk->getAddress().toString();
         jsonDesk["name"] = desk->getName();
         jsonDesk["serviceClasses"] = (int) desk->getServiceClasses();
 
@@ -86,6 +87,7 @@ QList<Desk *> ConfigStorage::convertJsonToDeskList(QJsonObject json)
 
         deskList.append(new Desk(
             QBluetoothUuid(deskObject["uuid"].toString()),
+            QBluetoothAddress(deskObject["address"].toString()),
             deskObject["name"].toString(),
             (quint32) deskObject["serviceClasses"].toInteger()
         ));

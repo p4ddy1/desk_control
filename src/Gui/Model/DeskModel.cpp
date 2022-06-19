@@ -38,15 +38,9 @@ void DeskModel::add(Desk *item)
 
 void DeskModel::clear()
 {
-    auto count = rowCount(QModelIndex());
-
-    if (count <= 0) {
-        return;
-    }
-
-    beginRemoveRows(QModelIndex(), 0, count);
+    beginResetModel();
     deskList.clear();
-    endRemoveRows();
+    endResetModel();
 }
 
 Desk *DeskModel::get(QModelIndex index) const

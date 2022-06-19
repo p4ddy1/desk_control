@@ -4,9 +4,10 @@
 
 namespace DeskControl::Bluetooth::Model
 {
-Desk::Desk(const QBluetoothUuid &uuid, QString name, quint32 serviceClasses, QObject *parent)
+Desk::Desk(const QBluetoothUuid &uuid, const QBluetoothAddress &address, QString name, quint32 serviceClasses, QObject *parent)
     :
     uuid(uuid),
+    address(address),
     name(std::move(name)),
     serviceClasses(serviceClasses),
     QObject(parent)
@@ -26,6 +27,10 @@ QString Desk::getName() const
 quint32 Desk::getServiceClasses() const
 {
     return serviceClasses;
+}
+
+QBluetoothAddress Desk::getAddress() const {
+    return address;
 }
 
 } // Model
