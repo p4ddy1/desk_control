@@ -5,7 +5,6 @@
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QMenu>
-#include <QWidgetAction>
 #include <QCloseEvent>
 #include "../Model/DeskModel.h"
 #include "../Model/PositionModel.h"
@@ -14,7 +13,6 @@
 #include "../../Bluetooth/Model/Desk.h"
 #include "../../Config/ConfigStorage.h"
 #include "../../Config/Model/Config.h"
-#include "TrayPositionListView.h"
 
 namespace DeskControl::Gui::MainWindow
 {
@@ -74,6 +72,8 @@ private slots:
 
     void moveToPositionTrayClicked();
 
+    void trayPositionMenuAboutToShow();
+
 private:
     Ui::MainWindow *ui;
     DeskModel *deskModel;
@@ -91,8 +91,7 @@ private:
     QAction *showAction;
     QAction *upAction;
     QAction *downAction;
-    QWidgetAction *positionAction;
-    TrayPositionListView *trayPositionListView;
+    QMenu *trayPositionMenu;
     QAction *quitAction;
 
     int currentHeightMm;

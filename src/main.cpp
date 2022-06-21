@@ -6,7 +6,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
+
+    QApplication::setOrganizationDomain("p4ddy.de");
+    QApplication::setApplicationName("DeskControl");
 
     auto configStorage = new DeskControl::Config::ConfigStorage("config.json");
     auto config = configStorage->load();

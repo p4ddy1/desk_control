@@ -1,3 +1,5 @@
+#include <QStandardPaths>
+#include <QDir>
 #include "ConfigStorage.h"
 
 namespace DeskControl::Config
@@ -9,7 +11,7 @@ ConfigStorage::ConfigStorage(QString path)
 
 bool ConfigStorage::save(Config *config)
 {
-    QFile saveFile(path);
+    QFile saveFile(getAbsolutePath());
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
         return false;
@@ -28,7 +30,7 @@ bool ConfigStorage::save(Config *config)
 
 Config *ConfigStorage::load()
 {
-    QFile loadFile(path);
+    QFile loadFile(getAbsolutePath());
 
     if (!loadFile.open(QIODevice::ReadOnly)) {
         return new Config();
@@ -112,5 +114,22 @@ QList<Position *> ConfigStorage::convertJsonToPositionList(QJsonObject json)
     }
 
     return positionList;
+}
+
+QString ConfigStorage::getAbsolutePath()
+{
+    auto configBasePath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+
+    if (configBasePath.isEmpty()) {
+        qFatal("Error finding config path");
+    }
+
+    QDir configDir(configBasePath);
+
+    if (!configDir.exists()) {
+        configDir.mkpath(configBasePath);
+    }
+
+    return configDir.absoluteFilePath(path);
 }
 } // Config

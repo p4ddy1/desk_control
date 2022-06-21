@@ -5,10 +5,12 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include "../DeviceScanWindow/DeviceScanWindow.h"
+#include "../Model/Position.h"
 
 namespace DeskControl::Gui::MainWindow
 {
 using DeviceScanWindow::DeviceScanWindow;
+using Model::Position;
 
 MainWindow::MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent)
     : config(config), configStorage(configStorage), QWidget(parent), ui(new Ui::MainWindow)
@@ -94,9 +96,9 @@ void MainWindow::connected()
     disconnectButton->setEnabled(true);
     connectButton->setEnabled(false);
     scanButton->setEnabled(false);
-    trayPositionListView->setEnabled(true);
     upAction->setEnabled(true);
     downAction->setEnabled(true);
+    trayPositionMenu->setEnabled(true);
 }
 
 void MainWindow::disconnected()
@@ -112,9 +114,9 @@ void MainWindow::disconnected()
     disconnectButton->setEnabled(false);
     connectButton->setEnabled(true);
     scanButton->setEnabled(true);
-    trayPositionListView->setEnabled(false);
     upAction->setEnabled(false);
     downAction->setEnabled(false);
+    trayPositionMenu->setEnabled(false);
 }
 
 void MainWindow::connectionFailed(QString errorMessage)
@@ -271,20 +273,6 @@ void MainWindow::createTrayIcon()
     quitAction = new QAction("Quit", this);
     connect(quitAction, &QAction::triggered, this, &QCoreApplication::quit);
 
-    positionAction = new QWidgetAction(this);
-    trayPositionListView = new TrayPositionListView(this);
-    trayPositionListView->setEnabled(false);
-    trayPositionListView->setFrameShape(QFrame::NoFrame);
-    trayPositionListView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    trayPositionListView->viewport()->setAutoFillBackground(false);
-    trayPositionListView->setSpacing(2);
-
-    connect(trayPositionListView, &QListView::clicked, this, &MainWindow::moveToPositionTrayClicked);
-
-    trayPositionListView->setModel(positionModel);
-
-    positionAction->setDefaultWidget(trayPositionListView);
-
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(showAction);
     trayIconMenu->addAction(hideAction);
@@ -293,8 +281,10 @@ void MainWindow::createTrayIcon()
     trayIconMenu->addAction(downAction);
     trayIconMenu->addSeparator();
 
-    auto positionSubmenu = trayIconMenu->addMenu("Stored Positions");
-    positionSubmenu->addAction(positionAction);
+    trayPositionMenu = trayIconMenu->addMenu("Stored Positions");
+    trayPositionMenu->setEnabled(false);
+
+    connect(trayPositionMenu, &QMenu::aboutToShow, this, &MainWindow::trayPositionMenuAboutToShow);
 
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
@@ -310,13 +300,9 @@ void MainWindow::createTrayIcon()
 
 void MainWindow::moveToPositionTrayClicked()
 {
-    auto index = trayPositionListView->currentIndex();
+    auto sender = qobject_cast<QAction *>(QObject::sender());
+    auto position = (Position *) sender->data().value<void *>();
 
-    if (!index.isValid()) {
-        return;
-    }
-
-    auto position = positionModel->get(index);
 
     targetHeightMovementService->moveToHeight(position->getHeightMm());
 }
@@ -326,6 +312,21 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if (trayIcon->isVisible()) {
         hide();
         event->ignore();
+    }
+}
+
+void MainWindow::trayPositionMenuAboutToShow()
+{
+    trayPositionMenu->clear();
+
+    for (auto position : positionModel->getPositionList()) {
+        auto action = new QAction(position->getName(), trayPositionMenu);
+        auto data = QVariant::fromValue((void *) position);
+        action->setData(data);
+
+        connect(action, &QAction::triggered, this, &MainWindow::moveToPositionTrayClicked);
+
+        trayPositionMenu->addAction(action);
     }
 }
 } // DeskControl::Gui::MainWindow

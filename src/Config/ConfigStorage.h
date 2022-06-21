@@ -37,6 +37,8 @@ private:
     QList<Position *> convertJsonToPositionList(QJsonObject json);
 
     QString path;
+
+    QString getAbsolutePath();
 };
 
 } // Config
