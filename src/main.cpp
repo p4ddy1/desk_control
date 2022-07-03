@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QPushButton>
 
 #include "Gui/MainWindow/MainWindow.h"
 #include "Config/ConfigStorage.h"
