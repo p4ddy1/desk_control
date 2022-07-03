@@ -32,9 +32,13 @@ private:
 
     void convertPositionListToJson(QList<Position *> list, QJsonObject &json);
 
+    void convertHeightMappingToJson(Model::HeightMapping heightMapping, QJsonObject &json);
+
     QList<Desk *> convertJsonToDeskList(QJsonObject json);
 
     QList<Position *> convertJsonToPositionList(QJsonObject json);
+
+    Model::HeightMapping convertJsonToHeightMapping(QJsonObject json);
 
     QString path;
 

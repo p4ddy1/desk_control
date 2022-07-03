@@ -2,11 +2,16 @@
 
 namespace DeskControl::Config::Model
 {
-Config::Config(QList<Desk *> deskList, QList<Position *> positionList)
+Config::Config(
+    QList<Desk *> deskList,
+    QList<Position *> positionList,
+    HeightMapping heightMapping
+)
     :
-    deskList(std::move(deskList)), positionList(std::move(positionList))
+    deskList(std::move(deskList)),
+    positionList(std::move(positionList)),
+    heightMapping(heightMapping)
 {
-
 }
 
 QList<Desk *> Config::getDeskList() const
@@ -27,5 +32,15 @@ QList<Position *> Config::getPositionList() const
 void Config::setPositionList(QList<Position *> list)
 {
     positionList = std::move(list);
+}
+
+HeightMapping Config::getHeightMapping() const
+{
+    return heightMapping;
+}
+
+void Config::setHeightMapping(HeightMapping mapping)
+{
+    heightMapping = mapping;
 }
 } // Model

@@ -21,6 +21,7 @@ bool ConfigStorage::save(Config *config)
 
     convertDeskListToJson(config->getDeskList(), *json);
     convertPositionListToJson(config->getPositionList(), *json);
+    convertHeightMappingToJson(config->getHeightMapping(), *json);
 
     QJsonDocument document(*json);
     saveFile.write(document.toJson());
@@ -42,8 +43,9 @@ Config *ConfigStorage::load()
 
     auto deskList = convertJsonToDeskList(json);
     auto positionList = convertJsonToPositionList(json);
+    auto heightMapping = convertJsonToHeightMapping(json);
 
-    return new Config(deskList, positionList);
+    return new Config(deskList, positionList, heightMapping);
 }
 
 void ConfigStorage::convertDeskListToJson(QList<Desk *> list, QJsonObject &json)
@@ -131,5 +133,25 @@ QString ConfigStorage::getAbsolutePath()
     }
 
     return configDir.absoluteFilePath(path);
+}
+
+void ConfigStorage::convertHeightMappingToJson(Model::HeightMapping heightMapping, QJsonObject &json)
+{
+    QJsonObject jsonHeightMapping;
+
+    jsonHeightMapping["heightRaw"] = heightMapping.heightRaw;
+    jsonHeightMapping["heightMm"] = heightMapping.heightMm;
+
+    json["heightMapping"] = jsonHeightMapping;
+}
+
+Model::HeightMapping ConfigStorage::convertJsonToHeightMapping(QJsonObject json)
+{
+    auto jsonHeightMapping = json["heightMapping"].toObject();
+
+    return Model::HeightMapping{
+        jsonHeightMapping["heightRaw"].toInt(),
+        jsonHeightMapping["heightMm"].toInt(),
+    };
 }
 } // Config

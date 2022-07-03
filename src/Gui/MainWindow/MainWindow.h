@@ -6,6 +6,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QCloseEvent>
+#include <QMenuBar>
 #include "../Model/DeskModel.h"
 #include "../Model/PositionModel.h"
 #include "../../Bluetooth/Service/BluetoothController.h"
@@ -22,7 +23,6 @@ using Bluetooth::Service::BluetoothController;
 using Bluetooth::Service::TargetHeightMovementService;
 using Bluetooth::Model::Desk;
 using Config::ConfigStorage;
-using Config::Model::Config;
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -36,7 +36,7 @@ class MainWindow: public QWidget
 Q_OBJECT
 
 public:
-    MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent = nullptr);
+    MainWindow(ConfigStorage *configStorage, Config::Model::Config *config, QWidget *parent = nullptr);
 
     ~MainWindow() override;
 
@@ -74,17 +74,22 @@ private slots:
 
     void trayPositionMenuAboutToShow();
 
+    void aboutToQuit();
+
+    void configureHeightClicked();
+
 private:
     Ui::MainWindow *ui;
     DeskModel *deskModel;
     PositionModel *positionModel;
 
     ConfigStorage *configStorage;
-    Config *config;
+    Config::Model::Config *config;
 
     BluetoothController *bluetoothController;
     TargetHeightMovementService *targetHeightMovementService;
 
+    QMenuBar *mainMenu;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
     QAction *hideAction;
@@ -93,6 +98,7 @@ private:
     QAction *downAction;
     QMenu *trayPositionMenu;
     QAction *quitAction;
+    QAction *configureHeightAction;
 
     int currentHeightMm;
 
@@ -102,11 +108,15 @@ private:
 
     void loadPositionList();
 
-    void savePositionList();
+    void saveConfig();
+
+    void createActions();
 
     void createTrayIcon();
 
     QString askForPositionName();
+
+    void createMainMenu();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

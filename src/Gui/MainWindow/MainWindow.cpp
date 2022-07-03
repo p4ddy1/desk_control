@@ -12,14 +12,16 @@ namespace DeskControl::Gui::MainWindow
 using DeviceScanWindow::DeviceScanWindow;
 using Model::Position;
 
-MainWindow::MainWindow(ConfigStorage *configStorage, Config *config, QWidget *parent)
+MainWindow::MainWindow(ConfigStorage *configStorage, Config::Model::Config *config, QWidget *parent)
     : config(config), configStorage(configStorage), QWidget(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    auto heightMapping = new Bluetooth::Service::HeightMapping{1760, 800};
+    createActions();
+    createTrayIcon();
+    createMainMenu();
 
-    bluetoothController = new BluetoothController(heightMapping, this);
+    bluetoothController = new BluetoothController(config->getHeightMapping(), this);
 
     connect(bluetoothController, &BluetoothController::connected, this, &MainWindow::connected);
     connect(bluetoothController, &BluetoothController::disconnected, this, &MainWindow::disconnected);
@@ -47,7 +49,7 @@ MainWindow::MainWindow(ConfigStorage *configStorage, Config *config, QWidget *pa
     connect(ui->moveToPositionButton, &QPushButton::clicked, this, &MainWindow::moveToPositionButtonClicked);
     connect(ui->addPositionInputButton, &QPushButton::clicked, this, &MainWindow::addPositionInputButtonClicked);
 
-    createTrayIcon();
+    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &MainWindow::aboutToQuit);
 }
 
 MainWindow::~MainWindow()
@@ -99,6 +101,7 @@ void MainWindow::connected()
     upAction->setEnabled(true);
     downAction->setEnabled(true);
     trayPositionMenu->setEnabled(true);
+    configureHeightAction->setEnabled(true);
 }
 
 void MainWindow::disconnected()
@@ -117,6 +120,7 @@ void MainWindow::disconnected()
     upAction->setEnabled(false);
     downAction->setEnabled(false);
     trayPositionMenu->setEnabled(false);
+    configureHeightAction->setEnabled(false);
 }
 
 void MainWindow::connectionFailed(QString errorMessage)
@@ -194,7 +198,7 @@ void MainWindow::addCurrentPositionButtonClicked()
 
     auto position = new Model::Position(name, currentHeightMm);
     positionModel->add(position);
-    savePositionList();
+    saveConfig();
 }
 
 QString MainWindow::askForPositionName()
@@ -210,7 +214,7 @@ QString MainWindow::askForPositionName()
     return text;
 }
 
-void MainWindow::savePositionList()
+void MainWindow::saveConfig()
 {
     config->setPositionList(positionModel->getPositionList());
     configStorage->save(config);
@@ -221,7 +225,7 @@ void MainWindow::deletePositionButtonClicked()
     auto storedPositionTable = findChild<QTableView *>("storedPositionTable");
 
     positionModel->remove(storedPositionTable->currentIndex());
-    savePositionList();
+    saveConfig();
 }
 
 void MainWindow::moveToPositionButtonClicked()
@@ -251,28 +255,11 @@ void MainWindow::addPositionInputButtonClicked()
     }
 
     positionModel->add(new Model::Position(name, position));
-    savePositionList();
+    saveConfig();
 }
 
 void MainWindow::createTrayIcon()
 {
-    hideAction = new QAction("Hide", this);
-    connect(hideAction, &QAction::triggered, this, &MainWindow::hide);
-
-    showAction = new QAction("Show", this);
-    connect(showAction, &QAction::triggered, this, &MainWindow::show);
-
-    upAction = new QAction("Up", this);
-    connect(upAction, &QAction::triggered, this, &MainWindow::upButtonClicked);
-    upAction->setEnabled(false);
-
-    downAction = new QAction("Down", this);
-    connect(downAction, &QAction::triggered, this, &MainWindow::downButtonClicked);
-    downAction->setEnabled(false);
-
-    quitAction = new QAction("Quit", this);
-    connect(quitAction, &QAction::triggered, this, &QCoreApplication::quit);
-
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(showAction);
     trayIconMenu->addAction(hideAction);
@@ -328,5 +315,77 @@ void MainWindow::trayPositionMenuAboutToShow()
 
         trayPositionMenu->addAction(action);
     }
+}
+
+void MainWindow::aboutToQuit()
+{
+    saveConfig();
+}
+
+void MainWindow::createMainMenu()
+{
+    mainMenu = new QMenuBar(this);
+    auto appMenu = mainMenu->addMenu("Desk");
+
+    appMenu->addAction(upAction);
+    appMenu->addAction(downAction);
+    appMenu->addSeparator();
+    appMenu->addAction(configureHeightAction);
+    appMenu->addSeparator();
+    appMenu->addAction(quitAction);
+
+    layout()->setMenuBar(mainMenu);
+}
+void MainWindow::createActions()
+{
+    hideAction = new QAction("Hide", this);
+    connect(hideAction, &QAction::triggered, this, &MainWindow::hide);
+
+    showAction = new QAction("Show", this);
+    connect(showAction, &QAction::triggered, this, &MainWindow::show);
+
+    upAction = new QAction("Up", this);
+    connect(upAction, &QAction::triggered, this, &MainWindow::upButtonClicked);
+    upAction->setEnabled(false);
+
+    downAction = new QAction("Down", this);
+    connect(downAction, &QAction::triggered, this, &MainWindow::downButtonClicked);
+    downAction->setEnabled(false);
+
+    quitAction = new QAction("Quit", this);
+    connect(quitAction, &QAction::triggered, this, &QCoreApplication::quit);
+
+    configureHeightAction = new QAction("Set Height", this);
+    connect(configureHeightAction, &QAction::triggered, this, &MainWindow::configureHeightClicked);
+    configureHeightAction->setEnabled(false);
+}
+
+void MainWindow::configureHeightClicked()
+{
+    bool ok = false;
+
+    auto height = QInputDialog::getInt(
+        this,
+        "Enter height",
+        "Please measure the current height of the desk and enter the value in millimeters",
+        bluetoothController->getCurrentHeightMm(),
+        0,
+        3000,
+        1,
+        &ok
+    );
+
+    if (!ok) {
+        return;
+    }
+
+    auto heightMapping = Config::Model::HeightMapping{
+        bluetoothController->getCurrentHeightRaw(),
+        height
+    };
+
+    bluetoothController->setHeightMapping(heightMapping);
+    config->setHeightMapping(heightMapping);
+    saveConfig();
 }
 } // DeskControl::Gui::MainWindow

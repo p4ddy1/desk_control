@@ -2,7 +2,7 @@
 
 namespace DeskControl::Bluetooth::Service
 {
-BluetoothController::BluetoothController(HeightMapping *heightMapping, QObject *parent)
+BluetoothController::BluetoothController(HeightMapping heightMapping, QObject *parent)
     :
     heightMapping(heightMapping), QObject(parent)
 {
@@ -147,16 +147,27 @@ int BluetoothController::calculateHeightInMm(const QByteArray &value)
 {
     auto rawHeight = *(reinterpret_cast<const quint16_le *>(value.constData()));
 
-    int heightMm = ((rawHeight - heightMapping->heightRaw) / 10) + heightMapping->heightMm;
+    int heightMm = rawToMm(rawHeight);
 
     currentHeightMm = heightMm;
+    currentHeightRaw = rawHeight;
 
     return heightMm;
+}
+
+int BluetoothController::rawToMm(int raw)
+{
+    return ((raw - heightMapping.heightRaw) / 10) + heightMapping.heightMm;
 }
 
 int BluetoothController::getCurrentHeightMm() const
 {
     return currentHeightMm;
+}
+
+int BluetoothController::getCurrentHeightRaw() const
+{
+    return currentHeightRaw;
 }
 
 void BluetoothController::stop()
@@ -182,5 +193,11 @@ void BluetoothController::disconnectedFromDevice()
 void BluetoothController::errorOccurred(QLowEnergyController::Error newError)
 {
     emit connectionFailed("Error while establishing connection");
+}
+
+void BluetoothController::setHeightMapping(HeightMapping mapping)
+{
+    heightMapping = mapping;
+    emit heightChanged(rawToMm(currentHeightRaw));
 }
 } // Bluetooth
