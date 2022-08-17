@@ -6,7 +6,7 @@ You can store positions and move the desk to these positions.
 The application can minimize to tray, and you can recall the positions from there.
 Works on macOS, Linux and Windows.
 
-![Screenshot](https://cloud.lpnw.de/apps/files_sharing/publicpreview/CNMWx6pkXbqJn9k?x=3600&y=1380&a=true)
+![Screenshot](https://cloud.lpnw.de/apps/files_sharing/publicpreview/3bgWXZ6itccmabJ?x=2350&y=957&a=true)
 
 ## Requirements
 
